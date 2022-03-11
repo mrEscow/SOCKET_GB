@@ -15,6 +15,8 @@
 
 int main(int argc, const char* argv[])
 {
+    //const std::string host_name = { argv[1] };
+
     WSADATA wsaData;
     SOCKET SendRecvSocket;
 
@@ -33,6 +35,7 @@ int main(int argc, const char* argv[])
     ServerAddr.sin_port = htons(12345);
     err = bind(SendRecvSocket, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
 
+
     if (err == SOCKET_ERROR) {
         std::cout << "bind failed: " << WSAGetLastError() << std::endl;
         closesocket(SendRecvSocket);
@@ -45,7 +48,7 @@ int main(int argc, const char* argv[])
         err = recvfrom(SendRecvSocket, recvbuf, maxlen, 0, (sockaddr*)&ClientAddr, &ClientAddrSize);
         if (err > 0) {
             recvbuf[err] = '\0';
-            std::cout << recvbuf << " /n";
+            std::cout << recvbuf << " " << std::endl;
             sendto(SendRecvSocket, recvbuf, strlen(recvbuf), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
         }
         else
