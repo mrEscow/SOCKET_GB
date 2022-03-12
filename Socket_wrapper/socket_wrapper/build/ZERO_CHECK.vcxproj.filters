@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\socket_wrapper\build\CMakeFiles\7d7226a025341c110962ecd4d414d7f1\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{19E85CC0-7392-30A8-9B50-EA96CA21A461}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\socket_wrapper\src\socket.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\socket_wrapper\src\socket_wrapper.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\socket_wrapper\src\socket_wrapper_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\socket_wrapper\src\socket_wrapper_unix.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\socket_wrapper\src\socket_wrapper_windows.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\socket_wrapper\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{69FC4332-3700-3973-9112-26A7051EED92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{B8DA6EFB-A25D-3455-AB7A-A01BCECADBCB}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,3 @@
+C:/Users/Escow/source/repos/SOCKET/Socket_wrapper/socket_wrapper/build/CMakeFiles/socket-wrapper.dir
+C:/Users/Escow/source/repos/SOCKET/Socket_wrapper/socket_wrapper/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Escow/source/repos/SOCKET/Socket_wrapper/socket_wrapper/build/CMakeFiles/ZERO_CHECK.dir
