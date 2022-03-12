@@ -49,6 +49,10 @@ int main(int argc, const char* argv[])
     bool is_message{ false };
     size_t size_message{ 0 };
 
+    bool is_exit{ 0 };
+
+
+
     while (true)
     {
 
@@ -72,6 +76,23 @@ int main(int argc, const char* argv[])
                 for (size_t i = 0; i < size_message; i++)
                     message[i] = recvbuf[i];
                 is_message = true;
+
+                std::string exit;
+
+                for (size_t i = 0; i < 4; i++)
+                    exit += message[i];
+
+                if (exit == "exit") {
+                    is_exit = true;
+                    std::cout << "EXIT" << std::endl;
+                }
+            }
+
+            if (is_exit) {
+                sendto(SendRecvSocket, "SERVER_IS_EXIT! GOODBAY!", strlen("SERVER_IS_EXIT! GOODBAY!"), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+                closesocket(SendRecvSocket);
+                WSACleanup();
+                return 0;
             }
 
             if (is_name && is_message) {
