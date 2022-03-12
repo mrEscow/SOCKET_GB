@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <string>
 
 #ifdef _WIN32
 #   include <process.h>
@@ -24,7 +25,8 @@ int main(int argc, const char* argv[])
     int  err, maxlen = 512, ClientAddrSize = sizeof(ClientAddr);
 
     char* recvbuf = new char[maxlen];
-    char* result_string = new char[maxlen];
+    //char* result_string = new char[maxlen];
+    char* name = new char[maxlen];
 
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 
@@ -47,9 +49,19 @@ int main(int argc, const char* argv[])
     {
         err = recvfrom(SendRecvSocket, recvbuf, maxlen, 0, (sockaddr*)&ClientAddr, &ClientAddrSize);
         if (err > 0) {
+
             recvbuf[err] = '\0';
             std::cout << recvbuf << " " << std::endl;
-            sendto(SendRecvSocket, recvbuf, strlen(recvbuf), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+
+            if (recvbuf[1] == ':') {
+                std::cout << "good" << std::endl;
+                name =  recvbuf;
+                sendto(SendRecvSocket, "NAME:", strlen("NAME:"), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+                sendto(SendRecvSocket, name, strlen(name), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+            }
+
+            //sendto(SendRecvSocket, recvbuf, strlen(recvbuf), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+
         }
         else
         {
