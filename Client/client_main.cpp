@@ -17,7 +17,7 @@
 
 int main(int argc, const char* argv[])
 {
-    const std::string host_name = { argv[0] };
+    //const std::string host_name = { argv[0] };
 
     WSADATA wsaData;
     SOCKET SendRecvSocket;
@@ -28,7 +28,13 @@ int main(int argc, const char* argv[])
     char* recvbuf = new char[maxlen];
     char* query = new char[maxlen];
 
+
     WSAStartup(MAKEWORD(2, 2), &wsaData);
+
+    char* host_name = new char[maxlen];
+    std::cout << gethostname(host_name, 0) << std::endl;
+    std::cout << strlen(host_name) << std::endl;
+    std::cout << WSAGetLastError() << std::endl;
 
     SendRecvSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
@@ -38,8 +44,8 @@ int main(int argc, const char* argv[])
     unsigned char d = 1;
 
     unsigned int destination_address = (a << 24) | (b << 16) | (c << 8) | d;
- 
- 
+
+
     ServerAddr.sin_family = AF_INET;
     ServerAddr.sin_addr.s_addr = htonl(destination_address);
     ServerAddr.sin_port = htons(12345);
@@ -77,7 +83,7 @@ int main(int argc, const char* argv[])
             while (true)
             {
                 if (is_new_message) {
-                    sendto(SendRecvSocket, host_name.c_str(), strlen(host_name.c_str()), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
+                    sendto(SendRecvSocket, host_name, strlen(host_name), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
                     int size = sendto(SendRecvSocket, query, strlen(query), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
                     is_new_message = false;
                 }

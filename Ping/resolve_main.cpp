@@ -40,8 +40,12 @@ int main(int argc, const char* argv[])
         // TCP stream-sockets.
     hints.ai_socktype = SOCK_STREAM;
         // "Заполните мой IP-адрес за меня".
-    hints.ai_flags = AI_PASSIVE;
+    //hints.ai_flags = AI_PASSIVE;
+    hints.ai_flags = AI_CANONNAME;
+    hints.ai_protocol = 0;
 
+
+ 
     if ((status = getaddrinfo(host_name.c_str(), nullptr, &hints, &servinfo)) != 0)
     {
         std::cerr << "getaddrinfo error: " << *gai_strerror(status) << std::endl;

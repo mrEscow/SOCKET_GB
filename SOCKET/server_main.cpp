@@ -57,13 +57,14 @@ int main(int argc, const char* argv[])
     {
 
         err = recvfrom(SendRecvSocket, recvbuf, maxlen, 0, (sockaddr*)&ClientAddr, &ClientAddrSize);
+        std::cout << "SIZE: "<<err << std::endl;
         if (err > 0) {
 
 
             recvbuf[err] = '\0';
 
 
-            if (recvbuf[1] == ':') {
+            if (!is_name) {
                 std::cout << recvbuf << std::endl;
                 size_name = err;
                 for (size_t i = 0; i < size_name; i++)
@@ -119,9 +120,9 @@ int main(int argc, const char* argv[])
         else
         {
             std::cout << "recv failed: " << WSAGetLastError() << std::endl;
-            closesocket(SendRecvSocket);
-            WSACleanup();
-            return 1;
+            //closesocket(SendRecvSocket);
+            //WSACleanup();
+            //return 1;
         }
 
 
