@@ -40,77 +40,54 @@ int main(int argc, const char* argv[])
     unsigned int destination_address = (a << 24) | (b << 16) | (c << 8) | d;
  
  
-
     ServerAddr.sin_family = AF_INET;
     ServerAddr.sin_addr.s_addr = htonl(destination_address);
     ServerAddr.sin_port = htons(12345);
 
-
     bool is_new_message{ false };
 
     std::thread ForCin([&query,&is_new_message]() {
-        while (true)
-        {
-            //std::cout << "message:" << std::endl;
-            std::cin >> query;
-            is_new_message = true;
-            //std::cout << "true:" << std::endl;
+            while (true)
+            {
+                std::cin >> query;
+                is_new_message = true;
+            }
         }
-
-    });
+    );
 
     std::thread ForRecvfrom([&]() {
-        while (true)
-        {
-            err = recvfrom(SendRecvSocket, recvbuf, maxlen, 0, 0, 0);
-
-            if (err > 0) {
-                recvbuf[err] = '\0';
-                std::cout << recvbuf << " \n";
-                //std::cout << "err > 0" << std::endl;
-                //err = 0;
-
-            }
-            else {
-                //std::cout << "else" << std::endl;
-                //closesocket(SendRecvSocket);
-                //WSACleanup();
-                //return 1;
+            while (true)
+            {
+                err = recvfrom(SendRecvSocket, recvbuf, maxlen, 0, 0, 0);
+                if (err > 0) {
+                    recvbuf[err] = '\0';
+                    std::cout << recvbuf << " \n";
+                }
+                else {
+                    //closesocket(SendRecvSocket);
+                    //WSACleanup();
+                    //return 1;
+                }
             }
         }
-        });
-
+    );
 
 
     std::thread ForMessage([&]() {
-        while (true)
-        {
-            //std::cout << "ForMessage:" << std::endl;
-
-
-            if (is_new_message) {
-
-                sendto(SendRecvSocket, host_name.c_str(), strlen(host_name.c_str()), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
-                int size = sendto(SendRecvSocket, query, strlen(query), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
-
-                //std::cout << size << std::endl;
-                std::cout << "new_message" << std::endl;
-                is_new_message = false;
+            while (true)
+            {
+                if (is_new_message) {
+                    sendto(SendRecvSocket, host_name.c_str(), strlen(host_name.c_str()), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
+                    int size = sendto(SendRecvSocket, query, strlen(query), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
+                    is_new_message = false;
+                }
             }
-
-
         }
-        });
-
-    //while (true)
-    //{
+    );
 
     ForRecvfrom.join();
     ForCin.join();
     ForMessage.join();
-
-    //}
-
 
     closesocket(SendRecvSocket);
     return 0;
