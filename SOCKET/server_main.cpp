@@ -16,7 +16,6 @@
 
 int main(int argc, const char* argv[])
 {
-    //const std::string host_name = { argv[1] };
 
     WSADATA wsaData;
     SOCKET SendRecvSocket;
@@ -25,7 +24,6 @@ int main(int argc, const char* argv[])
     int  err, maxlen = 512, ClientAddrSize = sizeof(ClientAddr);
 
     char* recvbuf = new char[maxlen];
-    //char* result_string = new char[maxlen];
     char* name = new char[maxlen];
     char* message = new char[maxlen];
 
