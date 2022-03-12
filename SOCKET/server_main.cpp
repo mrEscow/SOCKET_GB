@@ -27,6 +27,7 @@ int main(int argc, const char* argv[])
     char* recvbuf = new char[maxlen];
     //char* result_string = new char[maxlen];
     char* name = new char[maxlen];
+    char* message = new char[maxlen];
 
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 
@@ -45,22 +46,55 @@ int main(int argc, const char* argv[])
         return -1;
     }
 
+    bool is_name{ false };
+    size_t size_name{ 0 };
+    bool is_message{ false };
+    size_t size_message{ 0 };
+
     while (true)
     {
+
         err = recvfrom(SendRecvSocket, recvbuf, maxlen, 0, (sockaddr*)&ClientAddr, &ClientAddrSize);
         if (err > 0) {
 
+
             recvbuf[err] = '\0';
-            std::cout << recvbuf << " " << std::endl;
+
 
             if (recvbuf[1] == ':') {
-                std::cout << "good" << std::endl;
-                name =  recvbuf;
-                sendto(SendRecvSocket, "NAME:", strlen("NAME:"), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
-                sendto(SendRecvSocket, name, strlen(name), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+                std::cout << recvbuf << std::endl;
+                size_name = err;
+                for (size_t i = 0; i < size_name; i++)
+                    name[i] = recvbuf[i];
+                is_name = true;
+            }
+            else {
+                std::cout << recvbuf << std::endl;
+                size_message = err;
+                for (size_t i = 0; i < size_message; i++)
+                    message[i] = recvbuf[i];
+                is_message = true;
             }
 
-            sendto(SendRecvSocket, recvbuf, strlen(recvbuf), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+            if (is_name && is_message) {
+
+                std::string frame;
+                for (size_t i = 0; i <  (size_name > size_message ? size_name : size_message); i++)
+                    frame += "*";
+                
+                sendto(SendRecvSocket, frame.c_str(), strlen(frame.c_str()), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+
+                sendto(SendRecvSocket, "NAME:", strlen("NAME:"), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+                sendto(SendRecvSocket, name, size_name, 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+                sendto(SendRecvSocket, "MASSEGE:", strlen("MASSEGE:"), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+                sendto(SendRecvSocket, message, size_message, 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+
+                sendto(SendRecvSocket, frame.c_str(), strlen(frame.c_str()), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+
+                is_name = false;
+                is_message = false;
+
+            }
 
         }
         else
@@ -70,6 +104,8 @@ int main(int argc, const char* argv[])
             WSACleanup();
             return 1;
         }
+
+
     }
 
     return 0;
