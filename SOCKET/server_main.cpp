@@ -60,7 +60,7 @@ int main(int argc, const char* argv[])
                 sendto(SendRecvSocket, name, strlen(name), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
             }
 
-            //sendto(SendRecvSocket, recvbuf, strlen(recvbuf), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
+            sendto(SendRecvSocket, recvbuf, strlen(recvbuf), 0, (sockaddr*)&ClientAddr, sizeof(ClientAddr));
 
         }
         else

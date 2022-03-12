@@ -63,9 +63,23 @@ int main(int argc, const char* argv[])
         while (true)
         {
             err = recvfrom(SendRecvSocket, recvbuf, maxlen, 0, 0, 0);
+
+            if (err > 0) {
+                recvbuf[err] = '\0';
+                std::cout << recvbuf << " \n";
+                //std::cout << "err > 0" << std::endl;
+                //err = 0;
+
+            }
+            else {
+                //std::cout << "else" << std::endl;
+                //closesocket(SendRecvSocket);
+                //WSACleanup();
+                //return 1;
+            }
         }
         });
-    ForRecvfrom.detach();
+
 
 
     std::thread ForMessage([&]() {
@@ -85,33 +99,19 @@ int main(int argc, const char* argv[])
             }
 
 
-
-
-            if (err > 0) {
-                recvbuf[err] = '\0';
-                std::cout << recvbuf << " \n";
-                //std::cout << "err > 0" << std::endl;
-                err = 0;
-
-            }
-            else {
-                //std::cout << "else" << std::endl;
-                //closesocket(SendRecvSocket);
-                //WSACleanup();
-                //return 1;
-            }
-
         }
         });
 
     //while (true)
     //{
 
-        ForCin.join();
-        ForMessage.join();
+    ForRecvfrom.join();
+    ForCin.join();
+    ForMessage.join();
+
     //}
 
 
-    //closesocket(SendRecvSocket);
+    closesocket(SendRecvSocket);
     return 0;
 }
