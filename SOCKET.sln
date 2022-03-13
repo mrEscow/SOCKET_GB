@@ -10,11 +10,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Resolve", "Ping\Ping.vcxproj", "{AEBEC52E-C4FF-46D4-94AB-35E986A59592}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UPD_Server", "UPD_Server\UPD_Server.vcxproj", "{EE981D68-54C4-4F3D-A2FF-960F076F42E6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{18B962D7-9F64-4109-ADC0-A36BB4DB0D69} = {18B962D7-9F64-4109-ADC0-A36BB4DB0D69}
-	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Socket_wrapper", "Socket_wrapper\Socket_wrapper.vcxproj", "{18B962D7-9F64-4109-ADC0-A36BB4DB0D69}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UDP_Client", "UDP_Client\UDP_Client.vcxproj", "{F39A576E-CA83-4A9B-B6C8-E040F8D06A99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,14 +53,14 @@ Global
 		{EE981D68-54C4-4F3D-A2FF-960F076F42E6}.Release|x64.Build.0 = Release|x64
 		{EE981D68-54C4-4F3D-A2FF-960F076F42E6}.Release|x86.ActiveCfg = Release|Win32
 		{EE981D68-54C4-4F3D-A2FF-960F076F42E6}.Release|x86.Build.0 = Release|Win32
-		{18B962D7-9F64-4109-ADC0-A36BB4DB0D69}.Debug|x64.ActiveCfg = Debug|x64
-		{18B962D7-9F64-4109-ADC0-A36BB4DB0D69}.Debug|x64.Build.0 = Debug|x64
-		{18B962D7-9F64-4109-ADC0-A36BB4DB0D69}.Debug|x86.ActiveCfg = Debug|Win32
-		{18B962D7-9F64-4109-ADC0-A36BB4DB0D69}.Debug|x86.Build.0 = Debug|Win32
-		{18B962D7-9F64-4109-ADC0-A36BB4DB0D69}.Release|x64.ActiveCfg = Release|x64
-		{18B962D7-9F64-4109-ADC0-A36BB4DB0D69}.Release|x64.Build.0 = Release|x64
-		{18B962D7-9F64-4109-ADC0-A36BB4DB0D69}.Release|x86.ActiveCfg = Release|Win32
-		{18B962D7-9F64-4109-ADC0-A36BB4DB0D69}.Release|x86.Build.0 = Release|Win32
+		{F39A576E-CA83-4A9B-B6C8-E040F8D06A99}.Debug|x64.ActiveCfg = Debug|x64
+		{F39A576E-CA83-4A9B-B6C8-E040F8D06A99}.Debug|x64.Build.0 = Debug|x64
+		{F39A576E-CA83-4A9B-B6C8-E040F8D06A99}.Debug|x86.ActiveCfg = Debug|Win32
+		{F39A576E-CA83-4A9B-B6C8-E040F8D06A99}.Debug|x86.Build.0 = Debug|Win32
+		{F39A576E-CA83-4A9B-B6C8-E040F8D06A99}.Release|x64.ActiveCfg = Release|x64
+		{F39A576E-CA83-4A9B-B6C8-E040F8D06A99}.Release|x64.Build.0 = Release|x64
+		{F39A576E-CA83-4A9B-B6C8-E040F8D06A99}.Release|x86.ActiveCfg = Release|Win32
+		{F39A576E-CA83-4A9B-B6C8-E040F8D06A99}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
