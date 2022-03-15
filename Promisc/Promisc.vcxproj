@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{e5b4c637-8895-49d5-a471-061de4dc0103}</ProjectGuid>
-    <RootNamespace>Socketwrapper</RootNamespace>
+    <ProjectGuid>{c30fd519-76b9-44c4-be61-e276fdc564c4}</ProjectGuid>
+    <RootNamespace>Promisc</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Utility</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -78,6 +78,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <ExecutablePath>C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\src;$(ExecutablePath)</ExecutablePath>
+    <SourcePath>C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\src;$(SourcePath)</SourcePath>
+    <PublicIncludeDirectories>C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\src;$(PublicIncludeDirectories)</PublicIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -116,13 +119,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\include;C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\src;C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>MSVCRTD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Escow\source\repos\SOCKET\Socket_wrapper\src;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -142,16 +144,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\socket_class.h" />
-    <ClInclude Include="include\socket_headers.h" />
-    <ClInclude Include="include\socket_wrapper.h" />
-    <ClInclude Include="src\socket_wrapper_impl.h" />
-    <ClInclude Include="src\socket_wrapper_unix.h" />
-    <ClInclude Include="src\socket_wrapper_windows.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\socket.cpp" />
-    <ClCompile Include="src\socket_wrapper.cpp" />
+    <ClCompile Include="promisc_main.cpp" />
+    <ClCompile Include="socket.cpp" />
+    <ClCompile Include="socket_wrapper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

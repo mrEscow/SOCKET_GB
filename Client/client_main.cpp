@@ -14,6 +14,8 @@
 #   include <unistd.h>
 #endif
 
+#define BUFLEN 512      //Max length of buffer
+#define PORT 8888       //The port on which to listen for incoming data
 
 
 
@@ -24,8 +26,8 @@ int main(int argc, const char* argv[])
     WSADATA wsaData;
     SOCKET SendRecvSocket;
 
-    sockaddr_in ServerAddr;
-    int  err, maxlen = 512;
+
+    int  err=0, maxlen = BUFLEN;
 
     char* recvbuf = new char[maxlen];
     char* query = new char[maxlen];
@@ -40,17 +42,23 @@ int main(int argc, const char* argv[])
 
     SendRecvSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
-    unsigned char a = 127;
-    unsigned char b = 0;
-    unsigned char c = 0;
-    unsigned char d = 1;
+    //unsigned char a = 127;
+    //unsigned char b = 0;
+    //unsigned char c = 0;
+    //unsigned char d = 1;
+
+    unsigned char a = 192;
+    unsigned char b = 168;
+    unsigned char c = 1;
+    unsigned char d = 175;
 
     unsigned int destination_address = (a << 24) | (b << 16) | (c << 8) | d;
 
-
+    sockaddr_in ServerAddr;
     ServerAddr.sin_family = AF_INET;
     ServerAddr.sin_addr.s_addr = htonl(destination_address);
-    ServerAddr.sin_port = htons(12345);
+    ServerAddr.sin_port = htons(PORT);
+    int ServerSize = sizeof(ServerAddr);
 
     bool is_new_message{ false };
 
@@ -63,12 +71,29 @@ int main(int argc, const char* argv[])
         }
     );
 
+
+
     std::thread ForRecvfrom([&]() {
             while (true)
             {
-                err = recvfrom(SendRecvSocket, recvbuf, maxlen, 0, 0, 0);
+
+                err = recvfrom(
+                    
+                    SendRecvSocket, 
+
+                    recvbuf, 
+                    maxlen, 
+
+                    0, 
+
+                    (sockaddr*)&ServerAddr,
+                    &ServerSize
+
+                );
+
                 if (err > 0) {
                     recvbuf[err] = '\0';
+                    std::cout << "server:" << std::endl;
                     std::cout << recvbuf << " \n";
                 }
                 else {
@@ -85,8 +110,23 @@ int main(int argc, const char* argv[])
             while (true)
             {
                 if (is_new_message) {
-                    sendto(SendRecvSocket, host_name, strlen(host_name), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
-                    int size = sendto(SendRecvSocket, query, strlen(query), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
+                    //sendto(SendRecvSocket, host_name, strlen(host_name), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
+
+                    int size = sendto(
+
+                        SendRecvSocket, 
+
+                        query, 
+                        strlen(query), 
+
+                        0, 
+
+                        (sockaddr*)&ServerAddr, 
+                        sizeof(ServerAddr)
+                    );
+
+
+                    std::cout << "Query go!" << std::endl;
                     is_new_message = false;
                 }
             }

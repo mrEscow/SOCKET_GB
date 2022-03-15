@@ -12,4 +12,3 @@ public:
     virtual int get_last_error_code() const = 0;
     virtual std::string get_last_error_string() const = 0;
 };
-
