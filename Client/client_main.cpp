@@ -178,6 +178,9 @@ int main(int argc, const char* argv[])
     ForRecvfrom.join();
     ForCin.join();
 
+    // clean 
     closesocket(SendRecvSocket);
+    WSACleanup();
+
     return 0;
 }
