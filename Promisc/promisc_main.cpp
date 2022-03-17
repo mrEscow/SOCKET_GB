@@ -80,7 +80,20 @@ int main(int argc, const char* const argv[])
 
     // The SIO_RCVALL control code enables a socket to receive all IPv4 or IPv6 packets passing through a network interface.
     // Another values: SIO_RCVALL, SIO_RCVALL_IGMPMCAST, SIO_RCVALL_MCAST.
-    rc = WSAIoctl(sock, SIO_RCVALL, &value, sizeof(value), nullptr, 0, &out, nullptr, nullptr);
+    rc = WSAIoctl(
+
+        sock, 
+        SIO_RCVALL, 
+        &value, 
+        sizeof(value), 
+        nullptr, 
+
+        0, 
+        &out, 
+
+        nullptr, 
+        nullptr
+    );
 
     if (SOCKET_ERROR == rc)
     {
@@ -115,5 +128,6 @@ int main(int argc, const char* const argv[])
         return EXIT_FAILURE;
     }
 #endif
+    //system("pause");
     return EXIT_SUCCESS;
 }

@@ -54,6 +54,8 @@ int main(int argc, const char* argv[])
 
     unsigned int destination_address = (a << 24) | (b << 16) | (c << 8) | d;
 
+
+
     sockaddr_in ServerAddr;
     ServerAddr.sin_family = AF_INET;
     ServerAddr.sin_addr.s_addr = htonl(destination_address);
@@ -62,15 +64,65 @@ int main(int argc, const char* argv[])
 
     bool is_new_message{ false };
 
-    std::thread ForCin([&query,&is_new_message]() {
+
+    char* Tstruct = new char[maxlen];
+
+    struct TestStruct
+    {
+        float x;
+        float y;
+    };
+
+    TestStruct testStructOut{-1000,1000};
+
+
+    std::thread ForCin([&]() {
             while (true)
             {
-                std::cin >> query;
+                std::cin >> Tstruct;
+                //std::cin >> query;
+
+                query = (char*)&testStructOut;
+                std::cout << "\nclient:" << std::endl;
+                std::cout << "Strlen(query): " << strlen(query) << std::endl;
+                std::cout << "TestStructOut:" << std::endl;
+                std::cout << "sizeof: " << sizeof(testStructOut) << std::endl;
+                std::cout << "sizeof: " << sizeof(query) << std::endl;
+                std::cout 
+                    << " X " << testStructOut.x
+                    << " Y " << testStructOut.y 
+                    << std::endl;
+                std::cout
+                    << "query:\n" 
+                    << " X " << ((TestStruct*)query)->x
+                    << " Y " << ((TestStruct*)query)->y
+                    << std::endl;
+
                 is_new_message = true;
+
+                if (is_new_message) {
+                    //sendto(SendRecvSocket, host_name, strlen(host_name), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
+                    
+                    int size = sendto(
+
+                        SendRecvSocket,
+
+                        query,
+                        sizeof(query),
+                        //8,
+                        //strlen(query),
+
+                        0,
+
+                        (sockaddr*)&ServerAddr,
+                        sizeof(ServerAddr)
+                    );
+
+                    is_new_message = false;
+                }
             }
         }
     );
-
 
 
     std::thread ForRecvfrom([&]() {
@@ -93,8 +145,25 @@ int main(int argc, const char* argv[])
 
                 if (err > 0) {
                     recvbuf[err] = '\0';
-                    std::cout << "server:" << std::endl;
+
+                    std::cout << "\nserver:" << std::endl;
+                    std::cout << "SizeBuff: " << err << " \n";
+                    std::cout << "SizeofBuff: " << sizeof(recvbuf) << std::endl;
                     std::cout << recvbuf << " \n";
+
+                    std::cout << "TestStructIn:" << std::endl;
+                    TestStruct testStructIn;
+                    testStructIn = *(TestStruct*)recvbuf;
+                    std::cout << "SizeofBuff: " << sizeof(recvbuf) << std::endl;
+                    std::cout << "SizeofStruct: " << sizeof(testStructIn) << std::endl;
+                    std::cout 
+                        << " X " << testStructIn.x
+                        << " Y " << testStructIn.y 
+                        << std::endl;
+                    std::cout
+                        << " X " << ((TestStruct*)recvbuf)->x
+                        << " Y " << ((TestStruct*)recvbuf)->y
+                        << std::endl;
                 }
                 else {
                     //closesocket(SendRecvSocket);
@@ -106,36 +175,8 @@ int main(int argc, const char* argv[])
     );
 
 
-    std::thread ForMessage([&]() {
-            while (true)
-            {
-                if (is_new_message) {
-                    //sendto(SendRecvSocket, host_name, strlen(host_name), 0, (sockaddr*)&ServerAddr, sizeof(ServerAddr));
-
-                    int size = sendto(
-
-                        SendRecvSocket, 
-
-                        query, 
-                        strlen(query), 
-
-                        0, 
-
-                        (sockaddr*)&ServerAddr, 
-                        sizeof(ServerAddr)
-                    );
-
-
-                    std::cout << "Query go!" << std::endl;
-                    is_new_message = false;
-                }
-            }
-        }
-    );
-
     ForRecvfrom.join();
     ForCin.join();
-    ForMessage.join();
 
     closesocket(SendRecvSocket);
     return 0;
