@@ -30,10 +30,12 @@ int main(int argc, const char* const argv[])
 {
     if (argc != 3)
     {
-        std::cerr << "Argc: " << argc  << std::endl;
         std::cerr << "Usage: " << argv[0] << " <interface name or ip> <e|d>" << std::endl;
         return EXIT_FAILURE;
     }
+
+    std::cout << "IP: " << argv[1] << std::endl;
+    std::cout << "<e|d>: " << argv[2] << std::endl;
 
     socket_wrapper::SocketWrapper sock_wrap;
 
@@ -101,8 +103,10 @@ int main(int argc, const char* const argv[])
         return EXIT_FAILURE;
     }
 
+
     // Need to test, that interface in the promisc mode.
     getchar();
+
 #else
     struct ifreq ifr = { 0 };
     std::copy(if_name.begin(), if_name.end(), ifr.ifr_name);
